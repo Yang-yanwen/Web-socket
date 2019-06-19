@@ -1,0 +1,509 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+        }
+
+        /* html,body{
+            position: relative;
+        } */
+
+        #can {
+            position: absolute;
+            display: block;
+            z-index: -1;
+            background-image: url('./img/flowers.jpg');
+            background-size: 100% 100%;
+        }
+
+        #login_box {
+            width: 300px;
+            height: 400px;
+            background: rgba(141, 151, 155, 0.5);
+            position: relative;
+            margin: auto auto;
+            top: 150px;
+            display: none;
+        }
+
+        #nameplate {
+            width: 100%;
+            height: 50px;
+            color: rgb(247, 12, 12);
+            line-height: 50px;
+            font-size: 25px;
+            text-align: center;
+            font-family: '微软雅黑'
+        }
+
+        .userName {
+            width: 100%;
+            height: 80px;
+        }
+
+        .user_p {
+            /* display: inline-block; */
+            line-height: 40px;
+            font-size: 20px;
+            color: green;
+        }
+
+        input {
+            width: 80%;
+            height: 30px;
+            font-size: 15px;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin-left: 30px;
+        }
+
+        .userPortrait {
+            width: 100%;
+            height: 200px;
+        }
+
+        .user_p {
+            /* display: inline-block; */
+            line-height: 40px;
+            font-size: 20px;
+            color: green;
+        }
+
+        #enterBtn {
+
+            width: 50%;
+            height: 40px;
+            line-height: 50px;
+            font-size: 15px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            background: blue;
+            border-radius: 20px;
+            text-align: center;
+            line-height: 40px;
+            margin: 10px auto;
+        }
+
+        .protraits_ul {
+            width: 100%;
+            height: 100%;
+        }
+        /* li {
+            cursor: pointer;
+            list-style: none;
+            float: left;
+            width: 60px;
+            height: 60px;
+            background: purple;
+            margin-top: 10px;
+            margin-left: 8px;
+            border: 3px solid black;
+        } */
+
+        .li {
+            cursor: pointer;
+            list-style: none;
+            float: left;
+            width: 60px;
+            height: 60px;
+            background: purple;
+            margin-top: 10px;
+            margin-left: 8px;
+            border: 3px solid black;
+        }
+
+        .active{
+            border: 3px solid red;
+        }
+
+        img {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* 聊天界面 */
+
+        #chat_face {
+            width: 900px;
+            height: 100%;
+            background: rgba(141, 151, 155, 0.6);
+            position: relative;
+            margin: auto auto;
+            display: block;
+
+        }
+
+        /* 左 */
+
+        .contact_wrap {
+            width: 250px;
+            height: 100%;
+            background: rgb(60, 172, 46, 0.6);
+            float: left;
+        }
+
+        .master {
+            width: 100%;
+            height: 100px;
+            background: rgba(2, 43, 37, 0.952);
+            padding: 20px 30px;
+            box-sizing: border-box;
+        }
+
+        .master_protrait {
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+        }
+
+        .master_name {
+            cursor: pointer;
+            float: left;
+            color: white;
+            margin-left: 10px;
+            width: 120px;
+            height: 60px;
+            text-align: center;
+            font-size: 25px;
+            font-family: 楷体;
+            line-height: 60px;
+        }
+
+        .contact_li {
+            list-style: none;
+            width: 100%;
+            height: 60px;
+            margin-top: 10px;
+            /* box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5); */
+        }
+
+        .contact_li:hover {
+            box-shadow: 0px 0px 7px rgb(0, 0, 0, 0.9)
+        }
+
+        .contact_protrait {
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            margin-left: 5px;
+        }
+
+        .contact_name {
+            cursor: pointer;
+            float: left;
+            color: white;
+            margin-left: 10px;
+            width: 120px;
+            height: 60px;
+            font-size: 20px;
+            font-family: 楷体;
+            line-height: 60px;
+
+        }
+
+        /* 右 */
+
+        .chat_wrap {
+            float: left;
+            width: 650px;
+            height: 100%;
+
+        }
+
+        .show_counts {
+            width: 100%;
+            height: 6%;
+            background: lightblue;
+            color: purple;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+        }
+
+        .show_message {
+            width: 100%;
+            height: 68%;
+        }
+
+        .broadcase_new_user {
+            width: 100%;
+            height: 20px;
+            background: black;
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .other_message {
+            position: relative;
+            max-width: 325px;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        .show_other_text {
+            box-sizing: border-box;
+            width: 275px;
+            padding: 14px 14px;
+            margin-left: 50px;
+            margin-top: -50px;
+            background: greenyellow;
+            color: white;
+            border-radius: 30px;
+        }
+
+        .own_message {
+            max-width: 325px;
+            height: 50px;
+            margin-left: 315px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        .show_own_text {
+            box-sizing: border-box;
+            padding: 14px 14px;
+            width: 275px;
+            /* margin-left: 50px; */
+            margin-top: -50px;
+            background: blue;
+            color: white;
+            border-radius: 30px;
+        }
+
+        .edit {
+            width: 100%;
+            height: 26%;
+            position: relative;
+        }
+
+        .edit_emoticon {
+            width: 100%;
+            height: 15%;
+            border-top: 1px solid black;
+        }
+
+        .edit_emoticon .emoticon {
+            width: 24px;
+            height: 24px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .edit_text {
+            width: 100%;
+            height: 68%;
+            background: aqua;
+        }
+
+        .send_btn {
+            position: absolute;
+            width: 20%;
+            height: 16%;
+            background: chartreuse;
+            text-align: center;
+            line-height: 30px;
+            font-size: 18px;
+            color: blue;
+            border-radius: 20px;
+            right: 0px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="./js/jquery-2.1.0.js"></script>
+</head>
+
+<body>
+    <canvas id="can"></canvas>
+    <!-- 登陆界面 -->
+    <div id="login_box">
+
+        <div id="nameplate">
+            <span>激情_果聊</span>
+        </div>
+        <hr>
+
+        <div class="userName" id="user_name">
+            <p class="user_p">注册用户名：</p>
+            <input id="username" type="text"/>
+        </div>
+        <hr>
+
+        <div class="userPortrait" id="user_portrait">
+            <p class="user_p">请选则头像：</p>
+            <hr>
+            <div id="protraits">
+                <ul class="protraits_ul">
+                    <li class="li" index="1">
+                        <img  src="./img/1.jpg" alt="">
+                    </li>
+                    <li class="li" index="2">
+                        <img src="./img/2.jpg" alt="">
+                    </li>
+                    <li class="li" index="3">
+                        <img src="./img/3.jpg" alt="">
+                    </li>
+                    <li class="li" index="4">
+                        <img src="./img/4.jpg" alt="">
+                    </li>
+                    <li class="li" index="5">
+                        <img src="./img/5.jpg" alt="">
+                    </li>
+                    <li class="li" index="6">
+                        <img src="./img/6.jpg" alt="">
+                    </li>
+                    <li class="li" index="7">
+                        <img src="./img/7.jpg" alt="">
+                    </li>
+                    <li class="li" index="8">
+                        <img src="./img/8.jpg" alt="">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+
+        <div id="enterBtn">
+            <span>进入聊天室</span>
+        </div>
+
+    </div>
+    <!-- 聊天界面 -->
+    <div id="chat_face">
+        <!-- 左边联系人 -->
+        <div class="contact_wrap">
+            <!-- 主用户显示区 -->
+            <div class="master">
+                <div style="float:left">
+                    <img class="master_protrait" src="./img/1.jpg" alt="">
+                </div>
+                <div class="master_name">咔哇伊滴</div>
+            </div>
+            <hr>
+            <!-- 在线用户显示区 -->
+            <div class="contacts">
+                <ul class="contact_ul">
+                    <li class="contact_li">
+                        <div style="float:left">
+                            <img class="contact_protrait" src="./img/2.jpg" alt="">
+                        </div>
+                        <div class="contact_name">另一个用户1</div>
+                    </li>
+                    <li class="contact_li">
+                        <div style="float:left">
+                            <img class="contact_protrait" src="./img/3.jpg" alt="">
+                        </div>
+                        <div class="contact_name">另一个用户2</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 右边聊天框 -->
+        <div class="chat_wrap">
+            <!-- 聊天室名称 -->
+            <div class="show_counts">
+                激情_果聊（3）
+            </div>
+
+            <!-- 显示消息区 -->
+            <div class="show_message"> <!-- 显示消息区 内容浮出处理  -->
+                
+                <!-- 有人加入聊天室 -->
+                <div class="broadcase_new_user" >
+                    "另一个用户1" 加入聊天室
+                </div>
+                
+                <!-- 来自其他人的消息 -->
+                <div class="other_message">
+                    <div class="show_other_protrait">
+                        <img style="width:50px;height:50px" src="./img/2.jpg" alt="">
+                    </div>
+                    <div class="show_other_text">
+                        约吗
+                    </div>
+                </div>
+                <!-- 自己发送的消息 -->
+                <div class="own_message">
+                    <div class="show_own_protrait">
+                        <img style="width:50px;height:50px;margin-left:275px;" src="./img/1.jpg" alt="">
+                    </div>
+                    <div class="show_own_text">
+                        不约
+                    </div>
+                </div>
+
+                
+
+                <!-- test -->
+                <div class="other_message">
+                    <div class="show_other_protrait">
+                        <img style="width:50px;height:50px" src="./img/3.jpg" alt="">
+                    </div>
+                    <div class="show_other_text">
+                        农口没看到搜附近的看法地方代码法规方面代付款GV额的看法女快乐
+                         代付款时的到来看病难的乳房呢额靠你减肥法哦fk市东南部农口没 
+                         到搜附近的看法地方 代码法规方面代付款GV额的看法女快乐吗代付 
+                         款时的到来看病难的乳房呢额靠你减肥法哦fk市东南部
+                    </div>
+                </div>
+                <div class="broadcase_new_user">
+                    "另一个用户2" 加入聊天室
+                </div>
+                
+            </div>
+
+            <!-- 编辑消息区 -->
+            <div class="edit">
+                <!-- 表情选项 -->
+                <div class="edit_emoticon">
+                    <img class="emoticon" src="./img/icon/emoticon_smile.png" alt="表情">
+                    <img class="emoticon" src="./img/icon/Scissors.png" alt="截屏">
+                    <img class="emoticon" src="./img/icon/folder.png" alt="添加文件">
+                </div>
+                <div class="edit_text"></div>
+                <div class="send_btn">发送</div>
+            </div>
+        </div>
+    </div>
+    <script src="socket.io/socket.io.js"></script>
+    <!-- <script src="js/index.js"></script> -->
+    <script>
+        //画布设置
+        const canvas = document.getElementById('can')
+        const ctx = canvas.getContext('2d')
+        var cw = canvas.width = window.innerWidth
+        var ch = canvas.height = window.innerHeight
+        ctx.fillStyle = 'rgb(0, 0, 0,0)'
+        ctx.fillRect(0, 0, cw, ch)
+
+        //点击头像 边框变色 代表选中
+        var li = document.getElementsByTagName('li')
+        var input = document.getElementById('username')
+
+        //清除li的边框效果
+        function clearActive() {
+            for (var i = 0; i < li.length; i++) {
+                li[i].className='li'
+            }
+        }
+        //给被选中的头像 添加class名 ‘active’
+        $('.li').on('click',function(){ //箭头函数 this丢失
+            console.log(this)
+            clearActive()
+            this.className='li active'
+        })
+
+
+
+    </script>
+</body>
+
+</html>

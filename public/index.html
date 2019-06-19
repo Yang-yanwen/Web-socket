@@ -1,0 +1,238 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="./css/index.css" href="">
+    <script src="./js/jquery-2.1.0.js"></script>
+</head>
+
+<body>
+    <canvas id="can"></canvas>
+    <!-- 登陆界面 -->
+    <div id="login_box">
+
+        <div id="nameplate">
+            <span>激情_果聊</span>
+        </div>
+        <hr>
+
+        <div class="userName" id="user_name">
+            <p class="user_p">注册用户名：</p>
+            <input id="username" type="text"/>
+        </div>
+        <hr>
+
+        <div class="userPortrait" id="user_portrait">
+            <p class="user_p">请选则头像：</p>
+            <hr>
+            <div id="protraits">
+                <ul class="protraits_ul">
+                    <li class="li" index="1">
+                        <img  src="./img/1.jpg" alt="">
+                    </li>
+                    <li class="li" index="2">
+                        <img src="./img/2.jpg" alt="">
+                    </li>
+                    <li class="li" index="3">
+                        <img src="./img/3.jpg" alt="">
+                    </li>
+                    <li class="li" index="4">
+                        <img src="./img/4.jpg" alt="">
+                    </li>
+                    <li class="li" index="5">
+                        <img src="./img/5.jpg" alt="">
+                    </li>
+                    <li class="li" index="6">
+                        <img src="./img/6.jpg" alt="">
+                    </li>
+                    <li class="li" index="7">
+                        <img src="./img/7.jpg" alt="">
+                    </li>
+                    <li class="li" index="8">
+                        <img src="./img/8.jpg" alt="">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+
+        <div id="enterBtn">
+            <span>进入聊天室</span>
+        </div>
+
+    </div>
+    <!-- 聊天界面 -->
+    <div id="chat_face">
+        <!-- 左边联系人 -->
+        <div class="contact_wrap">
+            <!-- 主用户显示区 -->
+            <div class="master">
+                <div style="float:left">
+                    <img class="master_protrait" src="./img/1.jpg" alt="">
+                </div>
+                <div class="master_name">咔哇伊滴</div>
+            </div>
+            <hr>
+            <!-- 在线用户显示区 -->
+            <div class="contacts">
+                <ul class="contact_ul">
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- 右边聊天框 -->
+        <div class="chat_wrap">
+            <!-- 聊天室名称 -->
+            <div class="show_counts">
+                激情_果聊（<span id="counts"></span>）
+            </div>
+
+            <!-- 显示消息区 -->
+            <div class="show_message">
+                <!-- 有人加入聊天室 -->
+                
+                
+                
+            </div>
+
+            <!-- 编辑消息区 -->
+            <div class="edit">
+                <!-- 表情选项 -->
+                <div class="edit_emoticon">
+                    <img class="emoticon" src="./img/icon/emoticon_smile.png" alt="表情">
+                    <img class="emoticon" src="./img/icon/Scissors.png" alt="截屏">
+                    <a href="">
+                        <input type="file" id="files">
+                        <img class="emoticon" src="./img/icon/folder.png" alt="添加文件">
+                    </a>
+                    
+                </div>
+                <div class="edit_text">
+                    <textarea id="text"></textarea>
+                </div>
+                <div id="send_btn" class="send_btn">发送</div>
+            </div>
+        </div>
+    </div>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+        //画布设置
+        const canvas = document.getElementById('can')
+        const ctx = canvas.getContext('2d')
+        var cw = canvas.width = window.innerWidth
+        var ch = canvas.height = window.innerHeight
+        ctx.fillStyle = 'rgb(0, 0, 0,0)'
+        ctx.fillRect(0, 0, cw, ch)
+
+        //点击头像 边框变色 代表选中
+        var li = document.getElementsByTagName('li')
+        var input = document.getElementById('username')
+
+        //清除li的边框效果
+        function clearActive() {
+            for (var i = 0; i < li.length; i++) {
+                li[i].className='li'
+            }
+        }
+        //给被选中的头像 添加class名 ‘active’
+        $('.li').on('click',function(){ //箭头函数 this丢失
+            console.log(this)
+            clearActive()
+            this.className='li active'
+        })
+
+
+
+        //清除li的red边框状态和state状态
+        // function clearActive() {
+        //     for (var i = 0; i < li.length; i++) {
+        //         li[i].style.border = '3px solid black'
+        //         li[i].setAttribute('state', '0')
+        //     }
+        // }
+        // //改变边框状态
+        // function changeBoder() {
+        //     for (var i = 0; i < li.length; i++) {
+        //         li[i].onclick = function () {
+        //             //clearActive()
+        //             //console.log(this)  
+        //             // this.style.border = '3px solid red'
+        //             // this.setAttribute('state', '1') //更改state
+        //             
+        //         }
+        //     }
+        // }
+        // changeBoder()
+        //点击【进入聊天】按钮 
+        //1 判断是否填入了用户名-->提示
+        //2 判断是否选择了头像--> 查【state状态】-->提示
+        //3 拿到用户名和头像src 传递给服务器
+        //查头像是否已选择
+        // function checkPortrait() {
+        //     var stateArr = []
+        //     for (var i = 0; i < li.length; i++) { //塞进数组
+        //         //console.log(li[i].getAttribute('state'))
+        //         stateArr.push(li[i].getAttribute('state'))
+        //     }
+        //     //console.log(stateArr)
+        //     var sum = 0
+        //     for (var i = 0; i < stateArr.length; i++) {
+        //         sum += parseInt(stateArr[i])
+        //     }
+        //     //console.log('sum'+'='+sum)
+        //     if (sum == 0) {
+        //         return false
+        //     } else {
+        //         return true
+        //     }
+        // }
+        //返回所选src
+        // function chosenSrc() {
+        //     var stateArr = []
+        //     for (var i = 0; i < li.length; i++) {
+        //         stateArr.push(li[i].getAttribute('state'))
+        //     }
+        //     console.log(stateArr)
+        //     stateArr.forEach((item, index) => {
+        //         if (stateArr[index] == 1) {
+        //             //console.log(index)
+        //             var src = li[index].getAttribute('src')
+        //             console.log(src)
+        //         }
+        //     })
+        // }
+        //查看用户名是否填写
+        // function checkInput() {
+        //     //console.log(input.value)
+        //     if (input.value == '') {
+        //         return false
+        //     } else {
+        //         return true
+        //     }
+        // }
+        // enterBtn.addEventListener('click', () => {
+
+        //     //console.log(user_login)
+        //     if (checkPortrait() && checkInput()) {
+        //         console.log('已选头像,已填用户名')
+
+        //         //console.log(user_login.userName, user_login.userPortrait)
+
+        //         $('#login_box').css('display', 'none') //元素直接消失于dom节点
+        //         $('#chat_face').fadeIn() //令聊天界面 缓缓出现
+
+        //     } else {
+        //         console.log('没选头像')
+        //     }
+
+        // })
+
+
+
+    </script>
+</body>
+
+</html>
